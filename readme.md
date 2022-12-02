@@ -48,7 +48,7 @@ export SERVICE_ACCOUNT=[Google Service Account Name]
 export WORKLOAD_IDENTITY_POOL=[Workload Identity Pool]
 export WORKLOAD_PROVIDER=[Workload Identity Provider]
 export AUDIENCE=[Audience URL] #From Okta Audience Configuration
-export ISSUER=[ISSUER] #From Okta Audience Configuration
+export ISSUER=[ISSUER] #From Okta Issuer Configuration
 
 gcloud iam workload-identity-pools providers create-oidc $WORKLOAD_PROVIDER \
     --location="global" \

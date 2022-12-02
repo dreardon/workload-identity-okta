@@ -32,9 +32,13 @@ gcloud iam service-accounts add-iam-policy-binding $SERVICE_ACCOUNT@$PROJECT_ID.
 ```
 
 ## Create an Okta API Authorization Server
-    TODO: Add Steps/Screenshots
-    Will look similar to the URL below:
-    https://[your_okta_admin_url].okta.com/admin/oauth2/[okta_code]
+
+
+An authorization server defines your Okta security boundary, and is used to mint access and identity tokens for use with OIDC clients and OAuth 2.0 service accounts when accessing your resources via API. Within each authorization server you can define your own OAuth scopes, claims, and access policies.
+| Instructions        | Screenshot          |
+|:------------- |:-------------|
+|<ul type="square"><li>In the Okta Administrator console, go to Security > API and click "Add Authorization Server" <li> Keep track of the "Audience" value you set as you will need it later when configuring Google <li> Keep track of the "Issuer" value that is provided as you will need it later when configuring Google </ul>| ![Completed Authorization Server](images/add_authorization_server.png)<br>![Add Authorization Server](images/api_authorization_server.png) | 
+
 
 ## Connect Identity Pool to Okta
 ```
@@ -43,13 +47,15 @@ export PROJECT_NUMBER=[Google Project Number]
 export SERVICE_ACCOUNT=[Google Service Account Name]
 export WORKLOAD_IDENTITY_POOL=[Workload Identity Pool]
 export WORKLOAD_PROVIDER=[Workload Identity Provider]
+export AUDIENCE=[Audience URL] #From Okta Audience Configuration
+export ISSUER=[ISSUER] #From Okta Audience Configuration
 
 gcloud iam workload-identity-pools providers create-oidc $WORKLOAD_PROVIDER \
     --location="global" \
     --workload-identity-pool=$WORKLOAD_IDENTITY_POOL \
     --attribute-mapping="google.subject=assertion.sub" \
-    --issuer-uri="https://[your_okta_admin_url].okta.com/admin/oauth2/[okta_code]" \
-    --allowed-audiences="api://xxxxxxx"
+    --issuer-uri=$ISSUER \
+    --allowed-audiences=$AUDIENCE
 
 gcloud iam workload-identity-pools create-cred-config \
     projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/$WORKLOAD_IDENTITY_POOL/providers/$WORKLOAD_PROVIDER \

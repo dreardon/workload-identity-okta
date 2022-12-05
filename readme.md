@@ -3,12 +3,17 @@
 ## Google Disclaimer
 This is not an officially supported Google product
 
+## Prerequisites
+* An existing Google Project, you'll need to reference PROJECT_ID later in this setup
+
 ## Create a Google Service Account and Identity Pool
 ```
 export PROJECT_ID=[Google Project ID]
 export PROJECT_NUMBER=[Google Project Number]
-export SERVICE_ACCOUNT=[Google Service Account Name]
-export WORKLOAD_IDENTITY_POOL=[Workload Identity Pool]
+export SERVICE_ACCOUNT=test-wi #New Service Account for Workload Identity
+export WORKLOAD_IDENTITY_POOL=wi-federation-test-pool #New Workload Identity Pool Name
+
+gcloud config set project $PROJECT_ID
 
 gcloud iam service-accounts create $SERVICE_ACCOUNT \
     --display-name="Okta Workload Identity SA"
@@ -28,7 +33,7 @@ gcloud iam workload-identity-pools create $WORKLOAD_IDENTITY_POOL \
 
 gcloud iam service-accounts add-iam-policy-binding $SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com \
     --role="roles/iam.workloadIdentityUser" \
-    --member="principalSet://iam.googleapis.com/projects/&PROJECT_NUMBER/locations/global/workloadIdentityPools/$WORKLOAD_IDENTITY_POOL/*"
+    --member="principalSet://iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/$WORKLOAD_IDENTITY_POOL/*"
 ```
 
 ## Create an Okta API Authorization Server

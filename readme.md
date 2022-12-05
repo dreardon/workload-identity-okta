@@ -4,12 +4,14 @@
 This is not an officially supported Google product
 
 ## Prerequisites
-* An existing Google Project, you'll need to reference PROJECT_ID later in this setup
+<ul type="square"><li>An existing Google Project, you'll need to reference PROJECT_ID later in this setup</li>
+<li>Enabled services</li>
 
 ```
 gcloud services enable iamcredentials.googleapis.com
 gcloud services enable vision.googleapis.com
 ```
+</ul>
 
 ## Create a Google Service Account and Identity Pool
 ```
@@ -43,8 +45,7 @@ gcloud iam service-accounts add-iam-policy-binding $SERVICE_ACCOUNT@$PROJECT_ID.
 
 ## Create an Okta API Authorization Server
 
-
-An authorization server defines your Okta security boundary, and is used to mint access and identity tokens for use with OIDC clients and OAuth 2.0 service accounts when accessing your resources via API. Within each authorization server you can define your own OAuth scopes, claims, and access policies.
+An authorization server defines your Okta security boundary, and is used to mint access and identity tokens for use with OIDC clients and OAuth 2.0 service accounts when accessing your resources via API. Within each authorization server you can define your own OAuth scopes, claims, and access policies. This step is optional as the default api://default Authorization Server in Okta could be used instead.
 TODO: Verify necessity of adding default Scope
 | Instructions        | Screenshot          |
 |:------------- |:-------------|
@@ -59,8 +60,8 @@ export PROJECT_NUMBER=[Google Project Number]
 export SERVICE_ACCOUNT=[Google Service Account Name]
 export WORKLOAD_IDENTITY_POOL=[Workload Identity Pool]
 export WORKLOAD_PROVIDER=[Workload Identity Provider] #New Workload Provider Name
-export AUDIENCE=[Audience URL] #From Okta Audience Configuration
-export ISSUER=[ISSUER] #From Okta Issuer Configuration
+export AUDIENCE=[Audience URL] #From Okta Audience Configuration (e.g. api://default or your custom value)
+export ISSUER=[ISSUER] #From Okta Issuer Configuration, also needed in the .env file
 
 gcloud iam workload-identity-pools providers create-oidc $WORKLOAD_PROVIDER \
     --location="global" \

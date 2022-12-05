@@ -6,6 +6,11 @@ This is not an officially supported Google product
 ## Prerequisites
 * An existing Google Project, you'll need to reference PROJECT_ID later in this setup
 
+```
+gcloud services enable iamcredentials.googleapis.com
+gcloud services enable vision.googleapis.com
+```
+
 ## Create a Google Service Account and Identity Pool
 ```
 export PROJECT_ID=[Google Project ID]
@@ -40,18 +45,20 @@ gcloud iam service-accounts add-iam-policy-binding $SERVICE_ACCOUNT@$PROJECT_ID.
 
 
 An authorization server defines your Okta security boundary, and is used to mint access and identity tokens for use with OIDC clients and OAuth 2.0 service accounts when accessing your resources via API. Within each authorization server you can define your own OAuth scopes, claims, and access policies.
+TODO: Verify necessity of adding default Scope
 | Instructions        | Screenshot          |
 |:------------- |:-------------|
 |<ul type="square"><li>In the Okta Administrator console, go to Security > API and click "Add Authorization Server" <li> Keep track of the "Audience" value you set as you will need it later when configuring Google <li> Keep track of the "Issuer" value that is provided as you will need it later when configuring Google </ul>| ![Completed Authorization Server](images/add_authorization_server.png)<br>![Add Authorization Server](images/api_authorization_server.png) | 
 
 
 ## Connect Identity Pool to Okta
+After completing these steps, there will be a generated client-config.json file which will be used by the example code to covert the temporary Okta credentials to short-lived Google credentials.
 ```
 export PROJECT_ID=[Google Project ID]
 export PROJECT_NUMBER=[Google Project Number]
 export SERVICE_ACCOUNT=[Google Service Account Name]
 export WORKLOAD_IDENTITY_POOL=[Workload Identity Pool]
-export WORKLOAD_PROVIDER=[Workload Identity Provider]
+export WORKLOAD_PROVIDER=[Workload Identity Provider] #New Workload Provider Name
 export AUDIENCE=[Audience URL] #From Okta Audience Configuration
 export ISSUER=[ISSUER] #From Okta Issuer Configuration
 
@@ -65,7 +72,7 @@ gcloud iam workload-identity-pools providers create-oidc $WORKLOAD_PROVIDER \
 gcloud iam workload-identity-pools create-cred-config \
     projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/$WORKLOAD_IDENTITY_POOL/providers/$WORKLOAD_PROVIDER \
     --service-account="$SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com" \
-    --output-file=okta-workload-identity.json \
+    --output-file=client-config.json \
     --credential-source-file="okta-token.json" \
     --credential-source-type="json" \
     --credential-source-field-name="access_token"

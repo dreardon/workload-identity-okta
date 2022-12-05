@@ -93,6 +93,11 @@ OKTA_JWT=$(cat ./okta-token.json | python3 -c "import sys, json; print(json.load
 curl -X POST https://sts.googleapis.com/v1/token -d "audience=//iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/$WORKLOAD_IDENTITY_POOL/providers/$WORKLOAD_PROVIDER&grant_type=urn:ietf:params:oauth:grant-type:token-exchange&requested_token_type=urn:ietf:params:oauth:token-type:access_token&subject_token_type=urn:ietf:params:oauth:token-type:id_token&subject_token=$OKTA_JWT&scope=https://www.googleapis.com/auth/devstorage.read_only"
 ```
 
+## Auditing and Traceability
+| Instructions        | Screenshot          |
+|:------------- |:-------------|
+|<ul type="square"><li>To search for Workload Identity Federation activity, the query on the right, with the service account created for short termed Google Cloud credentials will show the Okta subject</li><li>The subject shown in green can be used to find the associated log entry in Okta's logs </ul>|![Cloud Operations](images/logging_audit.png)<br>![Okta Auditing](images/okta_audit.png)  | 
+
 ### For More Detail
 * https://medium.com/google-cloud/google-cloud-workload-identity-federation-with-okta-90c05b985b17
 * https://github.com/patilkapil/workload-identity-okta

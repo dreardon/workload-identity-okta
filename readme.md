@@ -11,7 +11,7 @@ This is not an officially supported Google product
 1. [Okta API Authorization Server](https://github.com/dreardon/workload-identity-okta#create-an-okta-api-authorization-server)
 1. [Connect Identity Pool to Okta](https://github.com/dreardon/workload-identity-okta#connect-identity-pool-to-okta)
 1. [Create an Okta Application](https://github.com/dreardon/workload-identity-okta#create-an-okta-application)
-1. [Validate Workload Identity Pool](https://github.com/dreardon/workload-identity-okta#validating-workload-identity-pool-setup)
+1. [Validate Workload Identity Pool](https://github.com/dreardon/workload-identity-okta#validate-workload-identity-pool-setup)
 1. [Auditing and Traceability](https://github.com/dreardon/workload-identity-okta#auditing-and-traceability)
 
 ## Prerequisites

@@ -1,7 +1,18 @@
 # Okta Workload Identity Federation
 
+This is the Okta portion of a multi project set of examples for configuring Google Cloud Workload Identity Federation. Shout out to Prashant Kulkarni and his amazing [Medium post](https://medium.com/google-cloud/google-cloud-workload-identity-federation-with-okta-90c05b985b17) which led me in the right direction.
+
 ## Google Disclaimer
 This is not an officially supported Google product
+
+## Table of Contents
+1. [Prerequisites](https://github.com/dreardon/workload-identity-okta#prerequisites)
+1. [Google Service Account and Identity Pool](https://github.com/dreardon/workload-identity-okta#create-a-google-service-account-and-identity-pool)
+1. [Okta API Authorization Server](https://github.com/dreardon/workload-identity-okta#create-an-okta-api-authorization-server)
+1. [Connect Identity Pool to Okta](https://github.com/dreardon/workload-identity-okta#connect-identity-pool-to-okta)
+1. [Create an Okta Application](https://github.com/dreardon/workload-identity-okta#create-an-okta-application)
+1. [Validate Workload Identity Pool](https://github.com/dreardon/workload-identity-okta#validating-workload-identity-pool-setup)
+1. [Auditing and Traceability](https://github.com/dreardon/workload-identity-okta#auditing-and-traceability)
 
 ## Prerequisites
 <ul type="square"><li>An existing Google Project, you'll need to reference PROJECT_ID later in this setup</li>
@@ -85,7 +96,7 @@ gcloud iam workload-identity-pools create-cred-config \
 |:------------- |:-------------|
 |<ul type="square"><li>In the Okta Administrator console, go to Applications > Applications and click "Create App Integration" <li>For the purpose of the example code, select "API Services" <li>Give your application an identifiable name <li>Copy the ClientID and Secret and ensure they are in your local .env file </ul>| ![Create Application](images/api_services.png)<br>![Add Application Mame](images/api_services_name.png)<br>![Save ClientID and Secret](images/application_client_secret.png)  | 
     
-## Validating Workload Identity Pool Setup
+## Validate Workload Identity Pool Setup
 ### NOTE: Make sure a valid "okta-token.json" is available
 ```
 OKTA_JWT=$(cat ./okta-token.json | python3 -c "import sys, json; print(json.load(sys.stdin)['access_token'])")

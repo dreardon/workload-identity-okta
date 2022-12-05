@@ -67,9 +67,10 @@ gcloud iam workload-identity-pools create-cred-config \
 ```
 
 ## Create an Okta Application
-    TODO: Add Steps/Screenshots
-    https://[your_okta_admin_url].okta.com/admin/apps/active
-    Obtain Client ID and Secret ID and use them in your .env file
+
+| Instructions        | Screenshot          |
+|:------------- |:-------------|
+|<ul type="square"><li>In the Okta Administrator console, go to Applications > Applications and click "Create App Integration" <li>For the purpose of the example code, select "API Services" <li>Give your application an identifiable name <li>Copy the ClientID and Secret and ensure they are in your local .env file </ul>| ![Create Application](images/api_services.png)<br>![Add Application Mame](images/api_services_name.png)<br>![Save ClientID and Secret](images/application_client_secret.png)  | 
     
 ## Validating Workload Identity Pool Setup
 ### NOTE: Make sure a valid "okta-token.json" is available

@@ -10,8 +10,8 @@ This is not an officially supported Google product
 ```
 export PROJECT_ID=[Google Project ID]
 export PROJECT_NUMBER=[Google Project Number]
-export SERVICE_ACCOUNT=test-wi #New Service Account for Workload Identity
-export WORKLOAD_IDENTITY_POOL=wi-federation-test-pool #New Workload Identity Pool Name
+export SERVICE_ACCOUNT=[Google Service Account Name] #New Service Account for Workload Identity
+export WORKLOAD_IDENTITY_POOL=[Workload Identity Pool] #New Workload Identity Pool Name
 
 gcloud config set project $PROJECT_ID
 
